@@ -17,3 +17,29 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Define the data structure
+class PasswordRequest(BaseModel):
+    password: str
+
+def mock_ai_model(password: str):
+    
+    missing_elements = []
+    # Chec for numbers
+    if not re.search(r"\d", password):
+        missing_elements.append("numbers")
+    # Check for special character
+    if not re.search(r"[ !@#$%^&*()_+\-=\[\]{};':\"\\|,.<>\/?]", password):
+        missing_elements.append("special characters")
+
+    if missing_elements:
+        recommendation = " and ".join(missing_elements)
+        return {
+            "is_strong": False,
+            "message": f"Weak password. We recommend adding {recommendation} to strengthen it."
+        }
+
+    return {
+        "is_strong": True,
+        "message": "Password is strong!"
+    }
