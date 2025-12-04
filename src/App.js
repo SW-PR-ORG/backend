@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="page">
 
-      {/* ---- HEADER ---- */}
+      {/*HEADER*/}
       <header className="header">
         <div 
           className={`tab ${activeTab === "hello" ? "active" : ""}`}
@@ -16,41 +16,45 @@ function App() {
         >
           Hello
         </div>
-        <div className={`tab ${activeTab === "home" ? "active" : ""}`} onClick={() => setActiveTab("home")}>
+        <div 
+          className={`tab ${activeTab === "home" ? "active" : ""}`}
+          onClick={() => setActiveTab("home")}
+        >
           Home Page
         </div>
         <div className="tab">About Us</div>
       </header>
 
-      {/* ---- MAIN CONTENT ---- */}
+      {/*MAIN CONTENT*/}
       <main className="content">
+
         {activeTab === "hello" && <h2>Hello Page</h2>}
 
         {activeTab === "home" && (
           <div>
             <h2>Type your password here</h2>
 
-            {/* Input */}
-            <input 
-              className="input-box"
-              type="text"
-              value={input}
-              placeholder="Enter password..."
-              onChange={(e) => setInput(e.target.value)}
-            />
-
-            {/* Button */}
-            <button className="enter-btn">Enter</button>
+            {/*Input + Button Container*/}
+            <div className="input-container">
+              <input 
+                className="input-box"
+                type="text"
+                value={input}
+                placeholder="Enter password..."
+                onChange={(e) => setInput(e.target.value)}
+              />
+              <button className="enter-btn">Enter</button>
+            </div>
 
             <h2>Output</h2>
 
-            {/* EMPTY Output box (reserved for future logic) */}
+            {/*Output box*/}
             <div className="output-box"></div>
           </div>
         )}
       </main>
 
-      {/* ---- FOOTER ---- */}
+      {/*FOOTER*/}
       <footer className="footer">
         <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
         <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
