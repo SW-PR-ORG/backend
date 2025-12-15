@@ -4,3 +4,8 @@ rockyou_100k_with_zxcvbn.csv
 sampled_passwords.txt
 rockyou_100k_merged_only.csv
 rockyou_100k_PCFG_OMEN_no_target.csv
+rockyou_100k_PCFG_OMEN_target.csv
+rockyou_dataset_cleaned.txt
+rockyou_dataset_cleanedcsv
+Ignored datasets/
+Dict/
