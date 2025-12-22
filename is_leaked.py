@@ -7,5 +7,3 @@ password_set = set(df['password'].astype(str))
 def password_exists(password):
 
     return password in password_set
-
- 
