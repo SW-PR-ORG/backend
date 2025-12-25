@@ -8,10 +8,14 @@ from zxcvbn import zxcvbn
 import joblib
 import subprocess
 import os
+from features.download_pcfg import clone_rules_if_missing
 
 # -----------------------------
 # Load resources ONCE
 # -----------------------------
+
+clone_rules_if_missing()
+
 def load_word_set(filename):
     # Get path 
     base_dir = os.path.dirname(os.path.abspath(__file__))  # features folder
