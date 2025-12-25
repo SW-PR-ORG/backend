@@ -8,13 +8,13 @@ from zxcvbn import zxcvbn
 import joblib
 import subprocess
 import os
-from features.download_pcfg import clone_rules_if_missing
+from features.download_pcfg import download_and_extract_rules
 
 # -----------------------------
 # Load resources ONCE
 # -----------------------------
 
-clone_rules_if_missing()
+download_and_extract_rules()
 
 def load_word_set(filename):
     # Get path 
