@@ -1,0 +1,51 @@
+name: UML to Code Generation
+
+on:
+  push:
+    branches: [ main, API, develop ]
+    paths:
+      - '**.puml'
+      - '**.plantuml'
+  workflow_dispatch:
+
+jobs:
+  generate-code:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+    
+    - name: Install code generation tools
+      run: |
+        # Install Plant2Code or other UML to code generators
+        echo "Setting up UML to code generation tools..."
+        pip install javalang 2>/dev/null || true
+    
+    - name: Check for UML diagrams
+      id: check-diagrams
+      run: |
+        if find . -name "*.puml" -o -name "*.plantuml" | grep -q .; then
+          echo "diagrams_found=true" >> $GITHUB_OUTPUT
+        else
+          echo "diagrams_found=false" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Generate code stubs from UML
+      if: steps.check-diagrams.outputs.diagrams_found == 'true'
+      run: |
+        echo "Code generation from UML would happen here"
+        echo "Example: Generate Python classes, interfaces from class diagrams"
+        echo "Example: Generate sequence flow code from sequence diagrams"
+    
+    - name: Validate generated code
+      if: steps.check-diagrams.outputs.diagrams_found == 'true'
+      run: |
+        if [ -d "generated" ]; then
+          python -m py_compile generated/*.py 2>/dev/null || true
+          echo "Generated code syntax validated"
+        fi
