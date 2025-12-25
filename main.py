@@ -18,7 +18,10 @@ app = FastAPI()
 
 from fastapi.middleware.cors import CORSMiddleware
 
-origins = ["http://localhost:3000"]
+origins = [
+    "http://localhost:3000",
+    "frontend-2ig3.vercel.app"
+]
 
 app.add_middleware(
     CORSMiddleware,
