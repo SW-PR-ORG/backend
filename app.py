@@ -13,6 +13,22 @@ from shap_utils import shap_to_dict, top_contributors, human_explanation
 app = FastAPI()
 
 # -------------------------
+# CORS
+# -------------------------
+
+from fastapi.middleware.cors import CORSMiddleware
+
+origins = ["http://localhost:3000"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# -------------------------
 # Load model (Booster)
 # -------------------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -33,22 +49,9 @@ class PasswordRequest(BaseModel):
     password: str
 
 # -------------------------
-# Rule-based endpoint
-# -------------------------
-@app.post("/rule-score")
-def rule_score(req: PasswordRequest):
-    score, feedback = rule_password_scorer(req.password, return_feedback=True)
-    
-    return {
-        "rule_score": score,
-        "feedback": feedback,
-        "is_leaked": is_leaked(req.password)
-    }
-
-# -------------------------
 # ML + SHAP endpoint
 # -------------------------
-@app.post("/check-password")
+@app.post("/evaluate")
 def check_password(req: PasswordRequest):
     pwd = req.password
 
@@ -75,4 +78,17 @@ def check_password(req: PasswordRequest):
         "ml_score": score,
         "top_factors": top_feats,
         "explanation": explanation
+    }
+
+# -------------------------
+# Rule-based endpoint
+# -------------------------
+@app.post("/rule_based")
+def rule_score(req: PasswordRequest):
+    score, feedback = rule_password_scorer(req.password, return_feedback=True)
+    
+    return {
+        "rule_score": score,
+        "feedback": feedback,
+        "is_leaked": is_leaked(req.password)
     }
