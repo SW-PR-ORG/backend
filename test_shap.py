@@ -62,10 +62,10 @@ for reason in explanation:
     print(f"{reason}")
 
 # Force plot
-shap.force_plot(
-    explainer.expected_value,
-    shap_values.values[0],
-    X_test.iloc[0],
-    feature_names=X_test.columns.tolist(),
-    matplotlib=True
-)
+# shap.force_plot(
+#     explainer.expected_value,
+#     shap_values.values[0],
+#     X_test.iloc[0],
+#     feature_names=X_test.columns.tolist(),
+#     matplotlib=True
+# )
