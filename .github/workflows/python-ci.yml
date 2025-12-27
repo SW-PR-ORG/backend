@@ -34,4 +34,4 @@ jobs:
       # Step 2.4: Run your tests
       - name: Run tests
         run: |
-          pytest "test *.py" 
+          pytest "test_extract.py" "test_model.py" "test_omen.py" "test_shap.py"
