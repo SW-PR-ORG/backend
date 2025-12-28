@@ -8,7 +8,7 @@ from zxcvbn import zxcvbn
 import joblib
 import subprocess
 import os
-from features.download_pcfg import clone_rules_if_missing
+from features.download_pcfg import download_and_extract_pcfg
 
 # -----------------------------
 # Load resources ONCE
