@@ -18,7 +18,10 @@ app = FastAPI()
 
 from fastapi.middleware.cors import CORSMiddleware
 
-origins = ["http://localhost:3000"]
+origins = [
+    "http://localhost:3000",                     
+    "https://frontend-coral-seven-46.vercel.app"    
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,6 +30,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # -------------------------
 # Load model (Booster)
