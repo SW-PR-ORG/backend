@@ -14,7 +14,7 @@ from features.download_pcfg import clone_rules_if_missing
 # Load resources ONCE
 # -----------------------------
 
-clone_rules_if_missing()
+download_and_extract_pcfg()
 
 def load_word_set(filename):
     # Get path 
