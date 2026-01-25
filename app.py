@@ -62,18 +62,14 @@ def check_password(req: PasswordRequest):
     if is_leaked(pwd):
         return {"error": "Password exists in rockyou 2009 dataset. It will almost be cracked immediately"}
 
-    # Extract features
+    # Extract features (DataFrame with names)
     features_df = extract_password_features(pwd)
 
-    # Convert to DMatrix (REQUIRED)
-    dmat = xgb.DMatrix(features_df)
-
-    # Predict directly from DataFrame (keeps feature names)
+    # Predict (NO DMatrix)
     score = float(model.predict(features_df)[0])
-    
-    # SHAP (use DataFrame)
-    shap_vals = explainer(features_df)
 
+    # SHAP
+    shap_vals = explainer(features_df)
     shap_dict = shap_to_dict(shap_vals)
     top_feats = top_contributors(shap_dict)
     explanation = human_explanation(top_feats)
