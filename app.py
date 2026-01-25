@@ -68,11 +68,11 @@ def check_password(req: PasswordRequest):
     # Convert to DMatrix (REQUIRED)
     dmat = xgb.DMatrix(features_df)
 
-    # Predict
-    score = float(model.predict(dmat)[0])
-
-    # SHAP (CORRECT)
-    shap_vals = explainer(dmat)
+    # Predict directly from DataFrame (keeps feature names)
+    score = float(model.predict(features_df)[0])
+    
+    # SHAP (use DataFrame)
+    shap_vals = explainer(features_df)
 
     shap_dict = shap_to_dict(shap_vals)
     top_feats = top_contributors(shap_dict)
