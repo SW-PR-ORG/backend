@@ -60,16 +60,21 @@ def check_password(req: PasswordRequest):
     pwd = req.password
 
     if is_leaked(pwd):
-        return {"error": "Password exists in rockyou 2009 dataset. It will almost be cracked immediately"}
+        return {
+            "error": "Password exists in rockyou 2009 dataset. It will almost be cracked immediately"
+        }
 
-    # Extract features (DataFrame with names)
+    # Extract features
     features_df = extract_password_features(pwd)
 
-    # Predict (NO DMatrix)
-    score = float(model.predict(features_df)[0])
+    # Convert to DMatrix (REQUIRED for Booster)
+    dmat = xgb.DMatrix(features_df)
+
+    # Predict
+    score = float(model.predict(dmat)[0])
 
     # SHAP
-    shap_vals = explainer(features_df)
+    shap_vals = explainer(dmat)
     shap_dict = shap_to_dict(shap_vals)
     top_feats = top_contributors(shap_dict)
     explanation = human_explanation(top_feats)
@@ -79,6 +84,7 @@ def check_password(req: PasswordRequest):
         "top_factors": top_feats,
         "explanation": explanation
     }
+
 
 # -------------------------
 # Rule-based endpoint
