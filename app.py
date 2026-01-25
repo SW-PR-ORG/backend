@@ -64,16 +64,15 @@ def check_password(req: PasswordRequest):
             "error": "Password exists in rockyou 2009 dataset. It will almost be cracked immediately"
         }
 
-    # Extract features
     features_df = extract_password_features(pwd)
 
-    # Convert to DMatrix (REQUIRED for Booster)
-    dmat = xgb.DMatrix(features_df)
+    dmat = xgb.DMatrix(
+        features_df,
+        feature_names=features_df.columns.tolist()
+    )
 
-    # Predict
     score = float(model.predict(dmat)[0])
 
-    # SHAP
     shap_vals = explainer(dmat)
     shap_dict = shap_to_dict(shap_vals)
     top_feats = top_contributors(shap_dict)
@@ -84,7 +83,6 @@ def check_password(req: PasswordRequest):
         "top_factors": top_feats,
         "explanation": explanation
     }
-
 
 # -------------------------
 # Rule-based endpoint
